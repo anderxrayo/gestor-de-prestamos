@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Negocios Escobar</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="LOGO FERNANDO.png" alt="Logo Escobar" />
+          </div>
+          <div>
+            <strong id="brandName">Negocios Escobar</strong>
+            <span>Gestion de caja y cobros</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Navegacion principal">
+          <button class="nav-item is-active" type="button" data-view="dashboard">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" type="button" data-view="loans">
+            <i data-lucide="wallet-cards"></i>
+            <span>Prestamos</span>
+          </button>
+          <button class="nav-item" type="button" data-view="collections">
+            <i data-lucide="hand-coins"></i>
+            <span>Cobros</span>
+          </button>
+          <button class="nav-item" type="button" data-view="clients">
+            <i data-lucide="users"></i>
+            <span>Clientes</span>
+          </button>
+          <button class="nav-item" type="button" data-view="cash">
+            <i data-lucide="banknote"></i>
+            <span>Caja</span>
+          </button>
+          <button class="nav-item" type="button" data-view="reports">
+            <i data-lucide="chart-no-axes-combined"></i>
+            <span>Reportes</span>
+          </button>
+          <button class="nav-item" type="button" data-view="settings">
+            <i data-lucide="settings"></i>
+            <span>Ajustes</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <span>Datos guardados en este navegador</span>
+        </div>
+      </aside>
+
+      <div class="main-shell">
+        <header class="topbar">
+          <button class="icon-btn mobile-menu" type="button" data-action="toggle-sidebar" aria-label="Abrir menu">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="search-wrap">
+            <i data-lucide="search"></i>
+            <input id="globalSearch" type="search" placeholder="Buscar cliente, zona, telefono..." autocomplete="off" />
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-btn notification-btn" type="button" data-action="open-notifications" aria-label="Notificaciones">
+              <i data-lucide="bell"></i>
+              <span class="notification-badge" id="notificationBadge" hidden>0</span>
+            </button>
+            <button class="ghost-btn" type="button" data-action="export-json">
+              <i data-lucide="download"></i>
+              <span>Respaldo</span>
+            </button>
+            <button class="primary-btn" type="button" data-action="open-loan-modal">
+              <i data-lucide="plus"></i>
+              <span>Nuevo</span>
+            </button>
+          </div>
+        </header>
+
+        <main class="content">
+          <section class="view is-active" id="view-dashboard" aria-labelledby="dashboardTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow" id="todayLabel">Hoy</p>
+                <h1 id="dashboardTitle">Dashboard</h1>
+                <div class="live-clock" id="peruClock">--:--:-- Peru</div>
+              </div>
+              <div class="header-actions">
+                <button class="ghost-btn" type="button" data-action="open-payment-modal">
+                  <i data-lucide="circle-dollar-sign"></i>
+                  <span>Registrar cobro</span>
+                </button>
+                <button class="ghost-btn" type="button" data-action="print-view">
+                  <i data-lucide="printer"></i>
+                  <span>Imprimir</span>
+                </button>
+              </div>
+            </div>
+            <div id="dashboardContent"></div>
+          </section>
+
+          <section class="view" id="view-loans" aria-labelledby="loansTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow">Control de prestamos</p>
+                <h1 id="loansTitle">Prestamos</h1>
+              </div>
+              <div class="header-actions">
+                <select id="loanStatusFilter" class="compact-select" aria-label="Estado">
+                  <option value="all">Todos</option>
+                  <option value="active">Activos</option>
+                  <option value="late">Vencidos</option>
+                  <option value="closed">Cerrados</option>
+                </select>
+                <button class="primary-btn" type="button" data-action="open-loan-modal">
+                  <i data-lucide="plus"></i>
+                  <span>Nuevo</span>
+                </button>
+              </div>
+            </div>
+            <div id="loansContent"></div>
+          </section>
+
+          <section class="view" id="view-collections" aria-labelledby="collectionsTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow">Cuotas por cobrar</p>
+                <h1 id="collectionsTitle">Cobros</h1>
+              </div>
+              <div class="header-actions">
+                <input id="collectionDateFilter" class="compact-input" type="date" />
+                <button class="ghost-btn" type="button" data-action="clear-collection-date">
+                  <i data-lucide="calendar-x"></i>
+                  <span>Todo</span>
+                </button>
+              </div>
+            </div>
+            <div id="collectionsContent"></div>
+          </section>
+
+          <section class="view" id="view-clients" aria-labelledby="clientsTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow">Agenda</p>
+                <h1 id="clientsTitle">Clientes</h1>
+              </div>
+              <button class="primary-btn" type="button" data-action="open-client-modal">
+                <i data-lucide="user-plus"></i>
+                <span>Nuevo cliente</span>
+              </button>
+            </div>
+            <div id="clientsContent"></div>
+          </section>
+
+          <section class="view" id="view-cash" aria-labelledby="cashTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow">Caja diaria</p>
+                <h1 id="cashTitle">Caja</h1>
+              </div>
+              <div class="header-actions">
+                <button class="ghost-btn" type="button" data-action="open-cash-modal" data-type="income">
+                  <i data-lucide="arrow-down-to-line"></i>
+                  <span>Ingreso</span>
+                </button>
+                <button class="ghost-btn" type="button" data-action="open-cash-modal" data-type="expense">
+                  <i data-lucide="arrow-up-from-line"></i>
+                  <span>Gasto</span>
+                </button>
+              </div>
+            </div>
+            <div id="cashContent"></div>
+          </section>
+
+          <section class="view" id="view-reports" aria-labelledby="reportsTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow">Resumen del negocio</p>
+                <h1 id="reportsTitle">Reportes</h1>
+              </div>
+              <div class="header-actions">
+                <input id="reportMonth" class="compact-input" type="month" />
+                <button class="ghost-btn" type="button" data-action="export-csv">
+                  <i data-lucide="file-spreadsheet"></i>
+                  <span>CSV</span>
+                </button>
+              </div>
+            </div>
+            <div id="reportsContent"></div>
+          </section>
+
+          <section class="view" id="view-settings" aria-labelledby="settingsTitle">
+            <div class="view-header">
+              <div>
+                <p class="eyebrow">Configuracion</p>
+                <h1 id="settingsTitle">Ajustes</h1>
+              </div>
+              <button class="ghost-btn" type="button" data-action="open-import">
+                <i data-lucide="upload"></i>
+                <span>Importar</span>
+              </button>
+            </div>
+            <div id="settingsContent"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow" id="modalEyebrow">Registro</p>
+            <h2 id="modalTitle">Modal</h2>
+          </div>
+          <button class="icon-btn" type="button" data-action="close-modal" aria-label="Cerrar">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
+    <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+    <input id="importFile" type="file" accept="application/json" hidden />
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
